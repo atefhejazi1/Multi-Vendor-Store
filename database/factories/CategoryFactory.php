@@ -22,7 +22,7 @@ class CategoryFactory extends Factory
             'name' => $name,
             'slug' => Str::slug($name),
             'description' => $this->faker->sentence(15),
-            'image' => $this->faker->imageUrl,
+            'image' => 'https://placehold.co/600x400',
         ];
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -23,7 +24,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        $parents = Category::whereNull('parent_id')->get();
+        return view('dashboard.categories.create', compact('parents'));
     }
 
     /**
@@ -31,7 +33,19 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+
+        // Request merge
+        $request->merge([
+            'slug' => Str::slug($request->post('name'))
+        ]);
+
+        $data = $request->except('image');
+
+
+        // Mass assignment
+        $category = Category::create($data);
+        return redirect()->route('categories.index')->with('success', 'Category created successfully.');
     }
 
     /**
@@ -61,8 +75,11 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $category = Category::findOrFail($id);
+        $category->delete();
+
+        return redirect()->route('categories.index')->with('success', 'Category deleted successfully.');
     }
 }

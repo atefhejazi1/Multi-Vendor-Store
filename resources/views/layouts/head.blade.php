@@ -1,6 +1,5 @@
 <base href="" />
-<title>Metronic - the world's #1 selling Bootstrap Admin Theme Ecosystem for HTML, Vue, React, Angular & Laravel by
-    Keenthemes</title>
+<title>@yield('page_title')</title>
 <meta charset="utf-8" />
 <meta name="description"
     content="The most advanced Bootstrap Admin Theme on Themeforest trusted by 100,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue, Asp.Net Core, Rails, Spring, Blazor, Django, Flask & Laravel versions. Grab your copy now and get life-time updates for free." />
@@ -19,10 +18,10 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
 <!--end::Fonts-->
 <!--begin::Vendor Stylesheets(used for this page only)-->
-<link href="assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
-<link href="assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
 <!--end::Vendor Stylesheets-->
 <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
-<link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
-<link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
 <!--end::Global Stylesheets Bundle-->

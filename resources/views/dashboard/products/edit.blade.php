@@ -3,7 +3,7 @@
 @section('page_title', 'Dashboard - Multi Vendor Store')
 
 @section('title', 'Home')
-@section('sub_title', 'Categories')
+@section('sub_title', 'Create Category')
 
 @section('content')
     <div class="d-flex flex-column flex-column-fluid">
@@ -25,12 +25,24 @@
                 <!--begin::Content container-->
                 <div id="kt_app_content_container" class="app-container container-xxl"
                     data-select2-id="select2-data-kt_app_content_container">
+                            @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
                     <form id="kt_ecommerce_add_category_form" enctype="multipart/form-data"
                         class="form d-flex flex-column flex-lg-row fv-plugins-bootstrap5 fv-plugins-framework"
-                        action="{{ route('dashboard.categories.store') }}" method="post"
+                        action="{{ route('dashboard.products.update', $product->id) }}" method="post"
                         data-select2-id="select2-data-kt_ecommerce_add_category_form">
                         @csrf
-                        @method('POST')
+                        @method('patch')
+
+
+
                         <!--begin::Aside column-->
                         <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10"
                             data-select2-id="select2-data-131-b166">
@@ -76,6 +88,10 @@
                                             <!--begin::Inputs-->
                                             <input type="file" name="image" accept=".png, .jpg, .jpeg">
                                             <input type="hidden" name="avatar_remove">
+                                            @if ($product->image)
+                                                <img src="{{ asset('uploads/' . $product->image) }}" alt=""
+                                                    height="60">
+                                            @endif
                                             <!--end::Inputs-->
                                         </label>
                                         <!--end::Label-->
@@ -128,8 +144,16 @@
                                     <select class="form-select mb-2" data-control="select2"
                                         data-placeholder="Select an option" name="status">
                                         <option></option>
-                                        <option value="active" selected>Active</option>
-                                        <option value="archived">Archived</option>
+                                        <option value="active"
+                                            {{ old('status', $product->status) == 'active' ? 'selected' : '' }}>Active
+                                        </option>
+                                        <option value="draft"
+                                            {{ old('status', $product->status) == 'draft' ? 'selected' : '' }}>Draft
+                                        </option>
+                                        <option value="archived"
+                                            {{ old('status', $product->status) == 'archived' ? 'selected' : '' }}>Archived
+                                        </option>
+
                                     </select>
 
                                     <!--begin::Description-->
@@ -169,15 +193,14 @@
                                     <!--begin::Input group-->
                                     <div class="mb-10 fv-row fv-plugins-icon-container">
                                         <!--begin::Label-->
-                                        <label class="required form-label">Category Name</label>
+                                        <label class="required form-label">Product Name</label>
                                         <!--end::Label-->
                                         <!--begin::Input-->
                                         <input type="text" name="name" class="form-control mb-2"
-                                            placeholder="Category name" value="">
+                                            placeholder="Product name" value="{{ $product->name }}">
                                         <!--end::Input-->
                                         <!--begin::Description-->
-                                        <div class="text-muted fs-7">A category name is required and recommended to be
-                                            unique.</div>
+                                        <div class="text-muted fs-7">A Product name is required</div>
                                         <!--end::Description-->
                                         <div class="fv-plugins-message-container invalid-feedback"></div>
                                     </div>
@@ -189,26 +212,67 @@
                                         <!--begin::Label-->
                                         <label
                                             class="form-label
-                                                            required">Primary
-                                            Category</label>
+                                                            required">
+                                            Store</label>
                                         <!--end::Label-->
                                         <!--begin::Select-->
                                         <select class="form-select mb-2" data-control="select2"
-                                            data-placeholder="Select an option" name="parent_id">
+                                            data-placeholder="Select an option" name="store_id">
                                             <option></option>
-                                            @foreach ($parents as $category)
-                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                            @foreach ($stores as $store)
+                                                <option value="{{ $store->id }}"
+                                                    {{ old('store_id', $product->store_id) == $store->id ? 'selected' : '' }}>
+                                                    {{ $store->name }}
+                                                </option>
                                             @endforeach
                                         </select>
                                         <!--end::Select-->
                                     </div>
+                                    <div class="mb-10 fv-row">
+                                        <!--begin::Label-->
+                                        <label
+                                            class="form-label
+                                                            required">
+                                            Category</label>
+                                        <!--end::Label-->
+                                        <!--begin::Select-->
+                                        <select class="form-select mb-2" data-control="select2"
+                                            data-placeholder="Select an option" name="category_id">
+                                            <option></option>
+                                            @foreach ($categories as $category)
+                                                <option value="{{ $category->id }}"
+                                                    {{ old('category_id', $product->category_id) == $category->id ? 'selected' : '' }}>
+                                                    {{ $category->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <!--end::Select-->
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-6">
+                                            <label class="required form-label">Compare Price</label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <input type="text" name="compare_price" class="form-control mb-2"
+                                                placeholder="Compare Price" value="{{ $product->compare_price }}">
+                                        </div>
+                                        <div class="col-sm-12 col-md-6">
+                                            <label class="required form-label">Product Price</label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <input type="text" name="price" class="form-control mb-2"
+                                                placeholder="Product Price" value=" {{ $product->price }}">
+                                        </div>
+                                    </div>
+
 
                                     <div>
                                         <!--begin::Label-->
                                         <label class="form-label">Description</label>
                                         <!--end::Label-->
                                         <!--begin::Editor-->
-                                        <textarea name="description"  class="form-control" id="" cols="30" rows="10"></textarea>
+                                        <textarea name="description" class="form-control" id="" cols="30" rows="10">{{ $product->description }}</textarea>
                                         <!--end::Editor-->
                                         <!--begin::Description-->
                                         <div class="text-muted fs-7">Set a description to the category for better
@@ -222,12 +286,12 @@
                                 <!--end::Card header-->
                             </div>
 
-                         <button type="submit" id="kt_ecommerce_add_category_submit" class="btn btn-primary">
-													<span class="indicator-label">Save Changes</span>
-													<span class="indicator-progress">Please wait...
-													<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-												</button>
-                                            </div>
+                            <button type="submit" id="kt_ecommerce_add_category_submit" class="btn btn-primary">
+                                <span class="indicator-label">Save Changes</span>
+                                <span class="indicator-progress">Please wait...
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                            </button>
+                        </div>
 
                         <!--end::General options-->
                         <!--begin::Meta options-->
@@ -235,29 +299,29 @@
                         <!--end::Content-->
 
 
-                    </div>
+                </div>
 
-                </form >
-                    @endsection
+                </form>
+            @endsection
 
             @push('scripts')
                 <script>
                     var hostUrl = "assets/";
                 </script>
                 <!--begin::Global Javascript Bundle(mandatory for all pages)-->
-                <script src="assets/plugins/global/plugins.bundle.js"></script>
-                <script src="assets/js/scripts.bundle.js"></script>
+                <script src="{{ 'assets/plugins/global/plugins.bundle.js' }}"></script>
+                <script src="assets/js/scripts.bundle.js')}}"></script>
                 <!--end::Global Javascript Bundle-->
                 <!--begin::Vendors Javascript(used for this page only)-->
-                <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
-                <script src="assets/plugins/custom/formrepeater/formrepeater.bundle.js"></script>
+                <script src="{{ 'assets/plugins/custom/datatables/datatables.bundle.js' }}"></script>
+                <script src="{{ 'assets/plugins/custom/formrepeater/formrepeater.bundle.js' }}"></script>
                 <!--end::Vendors Javascript-->
                 <!--begin::Custom Javascript(used for this page only)-->
-                <script src="assets/js/custom/apps/ecommerce/catalog/save-category.js"></script>
-                <script src="assets/js/widgets.bundle.js"></script>
-                <script src="assets/js/custom/widgets.js"></script>
-                <script src="assets/js/custom/apps/chat/chat.js"></script>
-                <script src="assets/js/custom/utilities/modals/upgrade-plan.js"></script>
-                <script src="assets/js/custom/utilities/modals/create-app.js"></script>
-                <script src="assets/js/custom/utilities/modals/users-search.js"></script>
+                <script src="{{ 'assets/js/custom/apps/ecommerce/catalog/save-category.js' }}"></script>
+                <script src="{{ 'assets/js/widgets.bundle.js' }}"></script>
+                <script src="{{ 'assets/js/custom/widgets.js' }}"></script>
+                <script src="{{ 'assets/js/custom/apps/chat/chat.js' }}"></script>
+                <script src="{{ 'assets/js/custom/utilities/modals/upgrade-plan.js' }}"></script>
+                <script src="{{ 'assets/js/custom/utilities/modals/create-app.js' }}"></script>
+                <script src="{{ 'assets/js/custom/utilities/modals/users-search.js' }}"></script>
             @endpush

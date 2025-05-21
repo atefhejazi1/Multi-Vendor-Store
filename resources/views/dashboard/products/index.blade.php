@@ -3,7 +3,7 @@
 @section('page_title', 'Dashboard - Multi Vendor Store')
 
 @section('title', 'Home')
-@section('sub_title', 'Categories')
+@section('sub_title', 'Products')
 
 @section('content')
     <div class="d-flex flex-column flex-column-fluid">
@@ -48,7 +48,7 @@
                                 </span>
                                 <!--end::Svg Icon-->
                                 <input type="text" data-kt-ecommerce-category-filter="search"
-                                    class="form-control form-control-solid w-250px ps-14" placeholder="Search Category">
+                                    class="form-control form-control-solid w-250px ps-14" placeholder="Search Products">
                             </div>
                             <!--end::Search-->
                         </div>
@@ -56,8 +56,8 @@
                         <!--begin::Card toolbar-->
                         <div class="card-toolbar">
                             <!--begin::Add customer-->
-                            <a href="{{ route('dashboard.categories.create') }}" class="btn btn-primary">Add
-                                Category</a>
+                            <a href="{{ route('dashboard.products.create') }}" class="btn btn-primary">Add
+                                Product</a>
                             <!--end::Add customer-->
                         </div>
                         <!--end::Card toolbar-->
@@ -79,8 +79,7 @@
 
 
 
-														"
-                                                style="width: 29.8906px;">
+														" style="width: 29.8906px;">
                                                 <div
                                                     class="form-check form-check-sm form-check-custom form-check-solid me-3">
                                                     <input class="form-check-input" type="checkbox" data-kt-check="true"
@@ -91,19 +90,19 @@
                                             <th class="min-w-250px sorting" tabindex="0"
                                                 aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1"
                                                 aria-label="Category: activate to sort column ascending"
+                                                style="width: 790.188px;">Product</th>
+                                            <th class="min-w-250px sorting" tabindex="0"
+                                                aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1"
+                                                aria-label="Category: activate to sort column ascending"
                                                 style="width: 790.188px;">Category</th>
                                             <th class="min-w-250px sorting" tabindex="0"
                                                 aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1"
                                                 aria-label="Category: activate to sort column ascending"
-                                                style="width: 790.188px;">Parent</th>
+                                                style="width: 790.188px;">Store</th>
                                             <th class="min-w-250px sorting" tabindex="0"
                                                 aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1"
                                                 aria-label="Category: activate to sort column ascending"
-                                                style="width: 790.188px;">Products #</th>
-                                            <th class="min-w-250px sorting" tabindex="0"
-                                                aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1"
-                                                aria-label="Category: activate to sort column ascending"
-                                                style="width: 790.188px;">States</th>
+                                                style="width: 790.188px;">Status</th>
                                             <th class="min-w-250px sorting" tabindex="0"
                                                 aria-controls="kt_ecommerce_category_table" rowspan="1" colspan="1"
                                                 aria-label="Category: activate to sort column ascending"
@@ -116,7 +115,7 @@
                                     <!--end::Table head-->
                                     <!--begin::Table body-->
                                     <tbody class="fw-semibold text-gray-600">
-                                        @foreach ($categories as $category)
+                                        @foreach ($products as $product)
                                             <tr class="odd">
                                                 <!--begin::Checkbox-->
                                                 <td>
@@ -132,20 +131,19 @@
                                                         <!--begin::Thumbnail-->
                                                         <a href="../../demo1/dist/apps/ecommerce/catalog/edit-category.html"
                                                             class="symbol symbol-50px">
-                                                            <span class="symbol-label"
-                                                                {{-- style="background-image: url('{{ asset('uploads/' . $category->image) }}');"></span> --}}
-                                                                style="background-image: url('{{  $category->imageurl }}');"></span>
+                                                            <span class="symbol-label" {{-- style="background-image: url('{{ asset('uploads/' . $category->image) }}');"></span> --}}
+                                                                style="background-image: url('{{ $product->imageurl }}');"></span>
                                                         </a>
                                                         <!--end::Thumbnail-->
                                                         <div class="ms-5">
                                                             <!--begin::Title-->
                                                             <a href="../../demo1/dist/apps/ecommerce/catalog/edit-category.html"
                                                                 class="text-gray-800 text-hover-primary fs-5 fw-bold mb-1"
-                                                                data-kt-ecommerce-category-filter="category_name">{{ $category->name }}</a>
+                                                                data-kt-ecommerce-category-filter="category_name">{{ $product->name }}</a>
                                                             <!--end::Title-->
                                                             <!--begin::Description-->
                                                             <div class="text-muted fs-7 fw-bold">
-                                                                {{ $category->description }}</div>
+                                                                {{ $product->category->name }}</div>
                                                             <!--end::Description-->
                                                         </div>
                                                     </div>
@@ -153,24 +151,26 @@
                                                 <td>
                                                     <!--begin::Badges-->
                                                     <div class="badge badge-light-info">
-                                                        {{ $category->parent->name }}</div>
-                                                    <!--end::Badges-->
-                                                </td>
-                                                <!--end::Category=-->
-                                                    <td>
-                                                    <!--begin::Badges-->
-                                                    <div class="badge badge-light-dark">{{ $category->products_number }}</div>
+                                                        {{ $product->category->name }}</div>
                                                     <!--end::Badges-->
                                                 </td>
                                                 <td>
                                                     <!--begin::Badges-->
-                                                    <div class="badge badge-light-success">{{ $category->status }}</div>
+                                                    <div class="badge badge-light-info">
+                                                        {{ $product->store->name }}</div>
+                                                    <!--end::Badges-->
+                                                </td>
+                                                <!--end::Category=-->
+
+                                                <td>
+                                                    <!--begin::Badges-->
+                                                    <div class="badge badge-light-success">{{ $product->status }}</div>
                                                     <!--end::Badges-->
                                                 </td>
                                                 <!--begin::Type=-->
                                                 <td>
                                                     <!--begin::Badges-->
-                                                    <div class="badge badge-light-primary">{{ $category->created_at }}
+                                                    <div class="badge badge-light-primary">{{ $product->created_at }}
                                                     </div>
                                                     <!--end::Badges-->
                                                 </td>
@@ -196,7 +196,7 @@
                                                         data-kt-menu="true">
                                                         <!--begin::Menu item-->
                                                         <div class="menu-item px-3">
-                                                            <a href="{{ route('dashboard.categories.edit', $category->id) }}"
+                                                            <a href="{{ route('dashboard.products.edit', $product->id) }}"
                                                                 class="menu-link px-3">Edit</a>
                                                         </div>
                                                         <!--end::Menu item-->
@@ -208,7 +208,7 @@
 
                                                             <a href="javascript:void(0);"
                                                                 class="menu-link px-3 text-danger"
-                                                                onclick="confirmDelete({{ $category->id }})">
+                                                                onclick="confirmDelete({{ $product->id }})">
                                                                 Delete
                                                             </a>
 
@@ -280,26 +280,26 @@
         var hostUrl = "assets/";
     </script>
     <!--begin::Global Javascript Bundle(mandatory for all pages)-->
-    <script src="assets/plugins/global/plugins.bundle.js"></script>
-    <script src="assets/js/scripts.bundle.js"></script>
+    <script src="{{ 'assets/plugins/global/plugins.bundle.js' }}"></script>
+    <script src="{{ 'assets/js/scripts.bundle.js' }}"></script>
     <!--end::Global Javascript Bundle-->
     <!--begin::Vendors Javascript(used for this page only)-->
-    <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <script src="{{ 'assets/plugins/custom/datatables/datatables.bundle.js' }}"></script>
     <!--end::Vendors Javascript-->
     <!--begin::Custom Javascript(used for this page only)-->
-    <script src="assets/js/custom/apps/ecommerce/catalog/categories.js"></script>
-    <script src="assets/js/widgets.bundle.js"></script>
-    <script src="assets/js/custom/widgets.js"></script>
-    <script src="assets/js/custom/apps/chat/chat.js"></script>
-    <script src="assets/js/custom/utilities/modals/upgrade-plan.js"></script>
-    <script src="assets/js/custom/utilities/modals/create-app.js"></script>
-    <script src="assets/js/custom/utilities/modals/users-search.js"></script>
+    <script src="{{ 'assets/js/custom/apps/ecommerce/catalog/categories.js' }}"></script>
+    <script src="{{ 'assets/js/widgets.bundle.js' }}"></script>
+    <script src="{{ 'assets/js/custom/widgets.js' }}"></script>
+    <script src="{{ 'assets/js/custom/apps/chat/chat.js' }}"></script>
+    <script src="{{ 'assets/js/custom/utilities/modals/upgrade-plan.js' }}"></script>
+    <script src="{{ 'assets/js/custom/utilities/modals/create-app.js' }}"></script>
+    <script src="{{ 'assets/js/custom/utilities/modals/users-search.js' }}"></script>
 @endpush
 @push('scripts')
     <script>
         function confirmDelete(id) {
             const form = document.getElementById('deleteForm');
-            form.action = `categories/${id}`; // عدّل حسب Route الحذف عندك
+            form.action = `products/${id}`; // عدّل حسب Route الحذف عندك
             const modal = new bootstrap.Modal(document.getElementById('deleteModal'));
             modal.show();
         }

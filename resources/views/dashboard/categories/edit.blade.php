@@ -25,12 +25,12 @@
                 <!--begin::Content container-->
                 <div id="kt_app_content_container" class="app-container container-xxl"
                     data-select2-id="select2-data-kt_app_content_container">
-                    <form id="kt_ecommerce_add_category_form" enctype="multipart/form-data"
+                    <form id="kt_ecommerce_add_category_form"
                         class="form d-flex flex-column flex-lg-row fv-plugins-bootstrap5 fv-plugins-framework"
-                        action="{{ route('dashboard.categories.store') }}" method="post"
+                        action="{{ route('dashboard.categories.update', $category->id) }}" method="post"
                         data-select2-id="select2-data-kt_ecommerce_add_category_form">
                         @csrf
-                        @method('POST')
+                        @method('patch')
                         <!--begin::Aside column-->
                         <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10"
                             data-select2-id="select2-data-131-b166">
@@ -74,8 +74,13 @@
                                             <i class="bi bi-pencil-fill fs-7"></i>
                                             <!--end::Icon-->
                                             <!--begin::Inputs-->
-                                            <input type="file" name="image" accept=".png, .jpg, .jpeg">
+                                            <input type="file" name="avatar" accept=".png, .jpg, .jpeg">
+
                                             <input type="hidden" name="avatar_remove">
+                                            @if ($category->image)
+                                                <img src="{{ asset('uploads/' . $category->image) }}" alt=""
+                                                    height="60">
+                                            @endif
                                             <!--end::Inputs-->
                                         </label>
                                         <!--end::Label-->
@@ -173,7 +178,7 @@
                                         <!--end::Label-->
                                         <!--begin::Input-->
                                         <input type="text" name="name" class="form-control mb-2"
-                                            placeholder="Category name" value="">
+                                            placeholder="Category name" value="{{ $category->name }}" />
                                         <!--end::Input-->
                                         <!--begin::Description-->
                                         <div class="text-muted fs-7">A category name is required and recommended to be
@@ -196,8 +201,9 @@
                                         <select class="form-select mb-2" data-control="select2"
                                             data-placeholder="Select an option" name="parent_id">
                                             <option></option>
-                                            @foreach ($parents as $category)
-                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                            @foreach ($parents as $parent)
+                                                <option value="{{ $parent->id }}" @selected(old('parent_id', $category->parent_id) == $parent->id)>
+                                                    {{ $parent->name }}</option>
                                             @endforeach
                                         </select>
                                         <!--end::Select-->
@@ -208,7 +214,7 @@
                                         <label class="form-label">Description</label>
                                         <!--end::Label-->
                                         <!--begin::Editor-->
-                                        <textarea name="description"  class="form-control" id="" cols="30" rows="10"></textarea>
+                                        <textarea name="description" class="form-control" id="" cols="30" rows="10">{{ $category->description }} </textarea>
                                         <!--end::Editor-->
                                         <!--begin::Description-->
                                         <div class="text-muted fs-7">Set a description to the category for better
@@ -222,12 +228,12 @@
                                 <!--end::Card header-->
                             </div>
 
-                         <button type="submit" id="kt_ecommerce_add_category_submit" class="btn btn-primary">
-													<span class="indicator-label">Save Changes</span>
-													<span class="indicator-progress">Please wait...
-													<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-												</button>
-                                            </div>
+                            <button type="submit" id="kt_ecommerce_add_category_submit" class="btn btn-primary">
+                                <span class="indicator-label">Save Changes</span>
+                                <span class="indicator-progress">Please wait...
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                            </button>
+                        </div>
 
                         <!--end::General options-->
                         <!--begin::Meta options-->
@@ -235,10 +241,10 @@
                         <!--end::Content-->
 
 
-                    </div>
+                </div>
 
-                </form >
-                    @endsection
+                </form>
+            @endsection
 
             @push('scripts')
                 <script>

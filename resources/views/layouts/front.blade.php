@@ -10,11 +10,11 @@
     <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.svg" />
 
     <!-- ========================= CSS here ========================= -->
-    <link rel="stylesheet" href="{{ asset('front/assets/css/bootstrap.min.css')}}" />
-    <link rel="stylesheet" href="{{ asset('front/assets/css/LineIcons.3.0.css')}}" />
-    <link rel="stylesheet" href="{{ asset('front/assets/css/tiny-slider.css')}}" />
-    <link rel="stylesheet" href="{{ asset('front/assets/css/glightbox.min.css')}}" />
-    <link rel="stylesheet" href="{{ asset('front/assets/css/main.css')}}" />
+    <link rel="stylesheet" href="{{ asset('front/assets/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('front/assets/css/LineIcons.3.0.css') }}" />
+    <link rel="stylesheet" href="{{ asset('front/assets/css/tiny-slider.css') }}" />
+    <link rel="stylesheet" href="{{ asset('front/assets/css/glightbox.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('front/assets/css/main.css') }}" />
 
 </head>
 
@@ -158,7 +158,7 @@
                                         <span class="total-items">0</span>
                                     </a>
                                 </div>
-                                 <x-cart-menu />
+                                <x-cart-menu />
                             </div>
                         </div>
                     </div>
@@ -218,9 +218,10 @@
                                         <a href="index.html" class="active" aria-label="Toggle navigation">Home</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="dd-menu collapsed" href="javascript:void(0)" data-bs-toggle="collapse"
-                                            data-bs-target="#submenu-1-2" aria-controls="navbarSupportedContent"
-                                            aria-expanded="false" aria-label="Toggle navigation">Pages</a>
+                                        <a class="dd-menu collapsed" href="javascript:void(0)"
+                                            data-bs-toggle="collapse" data-bs-target="#submenu-1-2"
+                                            aria-controls="navbarSupportedContent" aria-expanded="false"
+                                            aria-label="Toggle navigation">Pages</a>
                                         <ul class="sub-menu collapse" id="submenu-1-2">
                                             <li class="nav-item"><a href="about-us.html">About Us</a></li>
                                             <li class="nav-item"><a href="faq.html">Faq</a></li>
@@ -231,9 +232,10 @@
                                         </ul>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="dd-menu collapsed" href="javascript:void(0)" data-bs-toggle="collapse"
-                                            data-bs-target="#submenu-1-3" aria-controls="navbarSupportedContent"
-                                            aria-expanded="false" aria-label="Toggle navigation">Shop</a>
+                                        <a class="dd-menu collapsed" href="javascript:void(0)"
+                                            data-bs-toggle="collapse" data-bs-target="#submenu-1-3"
+                                            aria-controls="navbarSupportedContent" aria-expanded="false"
+                                            aria-label="Toggle navigation">Shop</a>
                                         <ul class="sub-menu collapse" id="submenu-1-3">
                                             <li class="nav-item"><a href="product-grids.html">Shop Grid</a></li>
                                             <li class="nav-item"><a href="product-list.html">Shop List</a></li>
@@ -243,11 +245,13 @@
                                         </ul>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="dd-menu collapsed" href="javascript:void(0)" data-bs-toggle="collapse"
-                                            data-bs-target="#submenu-1-4" aria-controls="navbarSupportedContent"
-                                            aria-expanded="false" aria-label="Toggle navigation">Blog</a>
+                                        <a class="dd-menu collapsed" href="javascript:void(0)"
+                                            data-bs-toggle="collapse" data-bs-target="#submenu-1-4"
+                                            aria-controls="navbarSupportedContent" aria-expanded="false"
+                                            aria-label="Toggle navigation">Blog</a>
                                         <ul class="sub-menu collapse" id="submenu-1-4">
-                                            <li class="nav-item"><a href="blog-grid-sidebar.html">Blog Grid Sidebar</a>
+                                            <li class="nav-item"><a href="blog-grid-sidebar.html">Blog Grid
+                                                    Sidebar</a>
                                             </li>
                                             <li class="nav-item"><a href="blog-single.html">Blog Single</a></li>
                                             <li class="nav-item"><a href="blog-single-sidebar.html">Blog Single
@@ -445,10 +449,10 @@
     </a>
 
     <!-- ========================= JS here ========================= -->
-    <script src="{{ asset('front/assets/js/bootstrap.min.js')}}"></script>
-    <script src="{{ asset('front/assets/js/tiny-slider.js')}}"></script>
-    <script src="{{ asset('front/assets/js/glightbox.min.js')}}"></script>
-    <script src="{{ asset('front/assets/js/main.js')}}"></script>
+    <script src="{{ asset('front/assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('front/assets/js/tiny-slider.js') }}"></script>
+    <script src="{{ asset('front/assets/js/glightbox.min.js') }}"></script>
+    <script src="{{ asset('front/assets/js/main.js') }}"></script>
     <script type="text/javascript">
         //========= Hero Slider
         tns({
@@ -488,7 +492,6 @@
                 }
             }
         });
-
     </script>
     <script>
         const finaleDate = new Date("February 15, 2023 00:00:00").getTime();

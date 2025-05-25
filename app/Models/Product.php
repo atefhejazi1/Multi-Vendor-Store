@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -21,6 +22,19 @@ class Product extends Model
         'compare_price',
         'status',
     ];
+
+    protected $hidden = [
+        'image',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
+
+    protected $appends = [
+        'image_url',
+    ];
+
+
 
     protected static function booted()
     {
@@ -64,5 +78,26 @@ class Product extends Model
 
         $discount = 100 * ($this->compare_price - $this->price) / $this->compare_price;
         return round($discount, 1);
+    }
+
+
+    public function scopeFilter(Builder $builder, $filters)
+    {
+        $options = array_merge([
+            'store_id' => null,
+            'category_id' => null,
+            'status' => 'active',
+        ], $filters);
+
+        $builder->when($options['status'], function ($query, $status) {
+            return $query->where('status', $status);
+        });
+
+        $builder->when($options['store_id'], function ($builder, $value) {
+            $builder->where('store_id', $value);
+        });
+        $builder->when($options['category_id'], function ($builder, $value) {
+            $builder->where('category_id', $value);
+        });
     }
 }

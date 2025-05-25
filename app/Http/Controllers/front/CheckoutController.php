@@ -67,7 +67,7 @@ class CheckoutController extends Controller
 
             DB::commit();
 
-            $cart->empty();
+            // $cart->empty();
             //event('order.created', $order, Auth::user());
             event(new OrderCreated($order));
         } catch (Throwable $e) {
@@ -75,6 +75,6 @@ class CheckoutController extends Controller
             throw $e;
         }
 
-        // return redirect()->route('orders.payments.create', $order->id);
+        return redirect()->route('orders.payments.create', $order->id);
     }
 }

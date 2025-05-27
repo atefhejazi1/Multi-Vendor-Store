@@ -103,17 +103,6 @@ class ProductController extends Controller
 
         $product->update($request->all());
 
-        // $product->update($request->only([
-        //     'name',
-        //     'description',
-        //     'category_id',
-        //     'store_id',
-        //     'status',
-        //     'price',
-        //     'compare_price'
-        // ]));
-
-
         return Response::json($product);
     }
 

@@ -16,6 +16,7 @@ class CartServiceProvider extends ServiceProvider
         $this->app->bind(CartRepository::class, function () {
             return new CartModelRepository();
         });
+
     }
 
     /**

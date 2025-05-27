@@ -34,6 +34,20 @@ class Category extends Model
             ]);
     }
 
+
+     protected $hidden = [
+        'image',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
+
+
+    protected $appends = [
+        'image_url',
+    ];
+
+
     public function getImageUrlAttribute()
     {
         if (!$this->image) {

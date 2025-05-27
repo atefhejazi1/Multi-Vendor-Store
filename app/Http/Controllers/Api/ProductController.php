@@ -10,9 +10,11 @@ use Illuminate\Support\Facades\Response;
 
 class ProductController extends Controller
 {
-    // public function __construct()
+
+    //   public function __construct()
     // {
-    //     $this->middleware('auth:sanctum')->except('index', 'show');
+    //     // Apply auth middleware to all methods except index
+    //     $this->middleware('auth:sanctum')->except(['index' , 'show']);
     // }
 
 

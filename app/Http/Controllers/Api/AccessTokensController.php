@@ -25,7 +25,7 @@ class AccessTokensController extends Controller
         if ($user && Hash::check($request->password, $user->password)) {
 
             $device_name = $request->post('device_name', $request->userAgent()); // Default to user agent if device name is not provided
-            $token = $user->createToken($device_name, $request->post('abilities', ['*']));
+            $token = $user->createToken($device_name, $request->post('abilities'));
 
             return Response::json([
                 'code' => 1,
